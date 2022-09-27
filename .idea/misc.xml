@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/drawable/google_button.xml" value="0.161" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/drawable/home_pets_logo.xml" value="0.16" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/drawable/pets_logo.xml" value="0.16" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/layout/activity_home.xml" value="0.152" />
+        <entry key="..\:/Users/cleit/Documents/Repos/Petland-Mobile/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/cleit/Documents/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
       </map>
     </option>
