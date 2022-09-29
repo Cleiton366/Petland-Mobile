@@ -7,23 +7,26 @@ import android.util.Log
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.petland_mobile.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import kotlinx.coroutines.runBlocking
-
 
 const val RC_SIGN_IN = 123
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var user : User
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             .requestProfile()
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val googleSignInBtn : LinearLayout = findViewById(R.id.googleSignInBtn)
         googleSignInBtn.setOnClickListener{
@@ -66,25 +69,64 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(this, "Failed to Log In:" + e, Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+            Toast.makeText(this, "Failed to Log In:$e", Toast.LENGTH_SHORT).show()
         }
     }
-    
-    //TODO authentication with BE
+
     private fun updateUI(account: GoogleSignInAccount) {
+        fetchUser(account)
+        if(user.id != "") {
+            Toast.makeText(this, "Log in successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Failed to Log In", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun fetchUser(account : GoogleSignInAccount) {
         runBlocking {
-            var url = ""
+            val url = getString(R.string.server) + "/user-info"
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
                     gson()
                 }
             }
-            val res: HttpResponse = client.get(url)
-            if(res.status.value == 200) {
-
+            val res: HttpResponse = client.get(url) {
+                headers {
+                    append("user", account.id.toString())
+                }
             }
-            client.close()
+            //if user is found on DB, create session and go to home activity
+            if(res.status.value == 200) {
+                user = res.body()
+                client.close()
+            } else {
+                client.close()
+                createNewUser(account)
+            }
+        }
+    }
+
+    private fun createNewUser( account: GoogleSignInAccount) {
+        runBlocking {
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            val res : HttpResponse = client.post(getString(R.string.server)+"/newUserAndroid") {
+                contentType(ContentType.Application.Json)
+                setBody(User(
+                    account.id!!,
+                    account.displayName!!,
+                    account.email!!,
+                    account.photoUrl.toString()
+                ))
+            }
+            if(res.status.value == 200) {
+                user = res.body()
+                client.close()
+            }
         }
     }
 
