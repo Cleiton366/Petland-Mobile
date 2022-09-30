@@ -1,19 +1,16 @@
 package com.example.petland_mobile
 
-import android.content.Intent
 import android.net.Uri
-import com.example.petland_mobile.models.User
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
+import android.widget.TextView
+import com.example.petland_mobile.models.User
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 
-class HomeActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
     private lateinit var user : User
     override fun onCreate(savedInstanceState: Bundle?) {
-
         supportActionBar?.hide()
 
         //getting user info
@@ -21,22 +18,20 @@ class HomeActivity : AppCompatActivity() {
         newUser ?.let {
             user = newUser
         }
-
         super.onCreate(savedInstanceState)
         Fresco.initialize(this)
-        setContentView(R.layout.activity_home)
-        loadUserImg(user.avatarurl)
-
-        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setOnClickListener {
-            val intent = Intent(this,  ProfileActivity::class.java)
-            intent.putExtra("user", user)
-            startActivity(intent)
-        }
+        setContentView(R.layout.activity_profile)
+        loadUserInfo()
     }
 
-    private fun loadUserImg(url : String) {
+    private fun loadUserInfo() {
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(url)
+        imageView.setImageURI(user.avatarurl)
+
+        val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
+        profileImageView.setImageURI(user.avatarurl)
+
+        val userName = findViewById<TextView>(R.id.username)
+        userName.text = user.username
     }
 }
