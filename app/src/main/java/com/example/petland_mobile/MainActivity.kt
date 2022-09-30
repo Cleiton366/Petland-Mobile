@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
             .requestProfile()
+            .requestEmail()
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -77,7 +78,9 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI(account: GoogleSignInAccount) {
         fetchUser(account)
         if(user.id != "") {
-            Toast.makeText(this, "Log in successfully", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this,  HomeActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
         } else {
             Toast.makeText(this, "Failed to Log In", Toast.LENGTH_SHORT).show()
         }
@@ -129,5 +132,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

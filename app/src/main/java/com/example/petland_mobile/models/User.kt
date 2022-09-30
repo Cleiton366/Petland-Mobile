@@ -1,6 +1,8 @@
 package com.example.petland_mobile.models
 
-class User {
+import java.io.Serializable
+
+class User : Serializable {
     lateinit var id : String
     lateinit var username : String
     lateinit var email : String
