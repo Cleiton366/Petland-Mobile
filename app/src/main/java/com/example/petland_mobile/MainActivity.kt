@@ -6,8 +6,6 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
