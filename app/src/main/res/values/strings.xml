@@ -9,4 +9,30 @@
     <string name="Adopt_Cat_Card_Tittle">Adopt a cat</string>
     <string name="Adopt_Dog_Card_Tittle">Adopt a dog</string>
     <string name="Submit_Pet_Card_Tittle">Help a pet be adopted</string>
+    <string name="file_name">Choose a photo of the pet</string>
+    <string name="pet_name">Name:</string>
+    <string name="pet_city">City:</string>
+    <string name="pet_state">State:</string>
+    <string name="pet_age">Age:</string>
+    <string name="pet_medical_condition">Medical Condition:</string>
+    <string name="donation_form_check_box">I agree that I cannot sell any animals on this platform.</string>
+    <string name="pet_type_1">Cat</string>
+    <string name="pet_type_2">Dog</string>
+    <string name="submit_form_btn">Submit</string>
+    <string name="cancel_form_btn">Cancel</string>
+
+    <string-array name="pet_medical_condition_options">
+        <item>Healthy</item>
+        <item>Unhealthy</item>
+        <item>Needs Medical Appointment eventually</item>
+        <item>Needs Medical Appointment urgently</item>
+    </string-array>
+
+    <string-array name="pet_age_options">
+        <item>Less than one year old</item>
+        <item>1 year old</item>
+        <item>2 years old</item>
+        <item>3 years old</item>
+        <item>Older than 3 years old</item>
+    </string-array>
 </resources>
