@@ -20,6 +20,7 @@
     <string name="pet_type_2">Dog</string>
     <string name="submit_form_btn">Submit</string>
     <string name="cancel_form_btn">Cancel</string>
+    <string name="Filter_title">Filter</string>
 
     <string-array name="pet_medical_condition_options">
         <item>Healthy</item>
