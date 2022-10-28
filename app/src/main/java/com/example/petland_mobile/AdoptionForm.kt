@@ -26,11 +26,8 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.http.cio.*
 import io.ktor.serialization.gson.*
-import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
-import org.json.JSONObject
 import java.io.File
 
 class AdoptionForm : AppCompatActivity() {
@@ -167,7 +164,7 @@ class AdoptionForm : AppCompatActivity() {
         var success = false
 
         val petAddress = PetAddress(petCity, petState)
-        val pet = Pet (user.id, petName, petAge, petMedicalCondition, petType, petAddress)
+        val petForm = PetForm (user.id, petName, petAge, petMedicalCondition, petType, petAddress)
 
         val file = File(getRealPathFromURI(this,imageUri!!));
 
@@ -180,7 +177,7 @@ class AdoptionForm : AppCompatActivity() {
             val res: HttpResponse = client.submitFormWithBinaryData(
                 url = getString(R.string.server) + "/pet/new",
                 formData = formData {
-                    append("pet", Gson().toJson(pet))
+                    append("pet", Gson().toJson(petForm))
                     append("image", file.readBytes(), Headers.build {
                         append(HttpHeaders.ContentDisposition, "filename=\"image.png\"")
                     })
@@ -195,8 +192,8 @@ class AdoptionForm : AppCompatActivity() {
         //TODO remove this after testing
         //TODO redirect user to pet profile when the page its done
         if(success) {
-            Toast.makeText(this, "Pet posted for donation", Toast.LENGTH_SHORT).show()
-        } else Toast.makeText(this, "Error while trying to add Pet for donation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "PetForm posted for donation", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, "Error while trying to add PetForm for donation", Toast.LENGTH_SHORT).show()
     }
 
     fun getRealPathFromURI(context: Context, contentUri: Uri): String {
