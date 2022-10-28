@@ -12,4 +12,5 @@
     <color name="secondaryColor">#98D4CA</color>
     <color name="primary_btn_color">#98D4CA</color>
     <color name="secondary_btn_color">#13AB92</color>
+    <color name="tertiaryColor">#A3DCD2</color>
 </resources>

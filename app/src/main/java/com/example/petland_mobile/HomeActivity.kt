@@ -35,10 +35,18 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("user", user)
             startActivity(intent)
         }
+        
+        //open user profile
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setOnClickListener {
+            val intent = Intent(this,  ProfileActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
     }
 
     private fun loadUserImg(url : String) {
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(Uri.parse(url))
+        imageView.setImageURI(url)
     }
 }
