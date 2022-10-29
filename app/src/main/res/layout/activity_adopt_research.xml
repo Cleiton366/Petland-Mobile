@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/constraintPetLayout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@color/secondaryColor"
@@ -35,9 +35,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/profile_image"
+                android:id="@+id/profile_ima"
                 app:roundAsCircle="true"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -46,6 +45,17 @@
                 app:layout_constraintHorizontal_bias="0.847"
                 app:layout_constraintStart_toEndOf="@+id/project_tittle"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/profile_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.847"
+                app:layout_constraintStart_toEndOf="@+id/project_tittle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:roundAsCircle="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         
         <TextView
@@ -74,18 +84,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:src="@drawable/adopt_cat_icon"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintHorizontal_bias="0.847"
-                app:layout_constraintStart_toEndOf="@+id/project_tittle" />
-
-
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/pet_photo"
+                android:layout_width="match_parent"
+                android:layout_height="160dp" />
             <TextView
+                android:id="@+id/pet_name"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,6 +98,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="200dp"/>
             <TextView
+                android:id="@+id/pet_age"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,6 +107,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="230dp"/>
             <TextView
+                android:id="@+id/pet_city"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,6 +116,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="260dp"/>
             <TextView
+                android:id="@+id/pet_medical_condition"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,9 +128,12 @@
         </androidx.cardview.widget.CardView>
 
         <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/allPetsListView"/>
+            android:background="#98D4C4"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:cardCornerRadius="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/allPetsListView"/>
 
 
     </LinearLayout>

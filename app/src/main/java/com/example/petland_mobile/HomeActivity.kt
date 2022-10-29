@@ -35,6 +35,14 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("user", user)
             startActivity(intent)
         }
+
+        //adopt cat
+        val adoptResearchCat : CardView = findViewById(R.id.adoptCatCard)
+        adoptResearchCat.setOnClickListener { val intent = Intent (this, AdoptResearch::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent) }
+
+
     }
 
     private fun loadUserImg(url : String) {

@@ -1,13 +1,17 @@
 package com.example.petland_mobile
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.net.Uri
 import com.example.petland_mobile.models.*
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
 import kotlin.collections.ArrayList
@@ -22,30 +26,38 @@ import io.ktor.serialization.gson.*
 
 class AdoptResearch : AppCompatActivity() {
     private var petList : MutableList<Pet> = ArrayList()
-
+    private lateinit var user : User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_adopt_research)
+        supportActionBar?.hide()
+
+        //getting user info
+        val newUser = intent.extras?.get("user") as? User
+        newUser ?.let {
+            user = newUser
+        }
+
+        Fresco.initialize(this)
+        setContentView(R.layout.activity_adopt_research)
+        loadUserImg(user.avatarurl)
 
         fetchPetList()
         allPetsListView()
 
-        /*val listView : ListView = findViewById(R.id.allPetsListView)
-        listView.setOnItemClickListener { parent, _, position, _ ->
-            val pets = petList[position]
+    }
 
-            val petsObj = petsObj(petList, pets, position)
-
-            val intent = Intent(this, Pet::class.java)
-            intent.putExtra("pet", petsObj)
-            startActivity(intent)
-        }*/
-
+    private fun allPetsListView(){
+        val listView : ListView = findViewById(R.id.allPetsListView)
+        val pets = petList.map{it}
+        val arrayAdapter : ArrayAdapter<Pet> = ArrayAdapter(this, R.layout.activity_adopt_research, pets)
+        listView.adapter = arrayAdapter
     }
 
     private fun fetchPetList () {
         runBlocking {
-            var url = "http://192.168.0.6:4000/pet"
+            var url = getString(R.string.server)
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
                     gson()
@@ -59,11 +71,8 @@ class AdoptResearch : AppCompatActivity() {
         }
     }
 
-    private fun allPetsListView(){
-        val listView : ListView = findViewById(R.id.allPetsListView)
-        val pets = petList.map{it}
-        val arrayAdapter : ArrayAdapter<Pet> = ArrayAdapter(this, R.layout.activity_adopt_research, pets)
-        listView.adapter = arrayAdapter
+    private fun loadUserImg(url : String) {
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setImageURI(Uri.parse(url))
     }
-
 }
