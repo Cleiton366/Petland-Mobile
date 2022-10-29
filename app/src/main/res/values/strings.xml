@@ -35,4 +35,8 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string name="pets_adopted">Pets Adopted</string>
+    <string name="pets_donated">Pets Donated</string>
+    <string name="no_pets">No Pets Adopted or Donated Yet :-(</string>
+    <string name="no_pets_description">Once you adopted or donated a pet they will appear here.</string>
 </resources>
