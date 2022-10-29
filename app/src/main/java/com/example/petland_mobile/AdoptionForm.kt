@@ -192,8 +192,8 @@ class AdoptionForm : AppCompatActivity() {
         //TODO remove this after testing
         //TODO redirect user to pet profile when the page its done
         if(success) {
-            Toast.makeText(this, "PetForm posted for donation", Toast.LENGTH_SHORT).show()
-        } else Toast.makeText(this, "Error while trying to add PetForm for donation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Pet posted for donation", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, "Error while trying to add Pet for donation", Toast.LENGTH_SHORT).show()
     }
 
     fun getRealPathFromURI(context: Context, contentUri: Uri): String {
