@@ -1,21 +1,16 @@
 package com.example.petland_mobile
 
-import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.content.Intent
 import android.net.Uri
 import com.example.petland_mobile.models.*
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.petland_mobile.adapters.AdapterCard
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
-import kotlin.collections.ArrayList
-import kotlin.system.exitProcess
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.client.engine.cio.*
@@ -25,13 +20,11 @@ import io.ktor.serialization.gson.*
 
 
 class AdoptResearch : AppCompatActivity() {
-    private var petList : MutableList<Pet> = ArrayList()
-    private lateinit var user : User
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_adopt_research)
-        supportActionBar?.hide()
+    private lateinit var petList : MutableList<Pet>
+    private lateinit var user : User
+
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         //getting user info
         val newUser = intent.extras?.get("user") as? User
@@ -39,8 +32,9 @@ class AdoptResearch : AppCompatActivity() {
             user = newUser
         }
 
-        Fresco.initialize(this)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adopt_research)
+
         loadUserImg(user.avatarurl)
 
         fetchPetList()
@@ -49,15 +43,18 @@ class AdoptResearch : AppCompatActivity() {
     }
 
     private fun allPetsListView(){
-        val listView : ListView = findViewById(R.id.allPetsListView)
-        val pets = petList.map{it}
-        val arrayAdapter : ArrayAdapter<Pet> = ArrayAdapter(this, R.layout.activity_adopt_research, pets)
-        listView.adapter = arrayAdapter
+
+        val recyclerView : RecyclerView = findViewById(R.id.adoptCatCard)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val adapter = AdapterCard(petList)
+        recyclerView.adapter = adapter
+
     }
 
     private fun fetchPetList () {
         runBlocking {
-            var url = getString(R.string.server)
+            var url = getString(R.string.server) + "/pet"
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
                     gson()
