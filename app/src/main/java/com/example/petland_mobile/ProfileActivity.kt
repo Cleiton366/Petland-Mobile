@@ -1,15 +1,16 @@
 package com.example.petland_mobile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.adapters.CardAdapter
-import com.example.petland_mobile.databinding.ActivityProfileBinding
 import com.example.petland_mobile.models.Pet
 import com.example.petland_mobile.models.User
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -43,11 +44,34 @@ class ProfileActivity : AppCompatActivity() {
         loadUserInfo()
         getPetsList()
 
-        val recyclerview = findViewById<RecyclerView>(R.id.recycler_view_donated_list)
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        if(petsListAdopted.size > 0 || petsListDonated.size > 0) {
+            //removing no pets message
+            val noPetsMessage = findViewById<LinearLayout>(R.id.no_pets_container)
+            noPetsMessage.isInvisible = true
+            val noPetsMessageParams : LinearLayout.LayoutParams = noPetsMessage.getLayoutParams() as LinearLayout.LayoutParams
+            noPetsMessageParams .height = 0
 
-        val adapter = CardAdapter(petsListDonated)
-        recyclerview.adapter = adapter
+            //populating recyclerview with arrays data
+            var recyclerview = findViewById<RecyclerView>(R.id.recycler_view_donated_list)
+            var adapter = CardAdapter(petsListDonated)
+
+            recyclerview.layoutManager = LinearLayoutManager(this)
+            recyclerview.adapter = adapter
+
+            recyclerview = findViewById<RecyclerView>(R.id.recycler_view_adopted_list)
+            adapter = CardAdapter(petsListAdopted)
+
+            recyclerview.layoutManager = LinearLayoutManager(this)
+            recyclerview.adapter = adapter
+        }
+        if (petsListAdopted.size == 0) {
+            val listContainer = findViewById<LinearLayout>(R.id.adopted_pets_container)
+            listContainer.isVisible = false
+        } else if (petsListDonated.size == 0) {
+            val listContainer = findViewById<LinearLayout>(R.id.donated_pets_container)
+            listContainer.isVisible = false
+        }
+
     }
 
     private fun loadUserInfo() {
@@ -62,6 +86,17 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun getPetsList () {
+        var error : Boolean = fetchAdoptedList()
+        error = fetchDonatedList()
+        if(error) {
+            val intent = Intent(this,  HomeActivity::class.java)
+            intent.putExtra("user", user)
+            Toast.makeText(this, "Error while fetching pets list", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
+        }
+    }
+
+    private fun fetchDonatedList() : Boolean{
         var error = false
         runBlocking {
             var url = getString(R.string.server) + "/donatedPets"
@@ -70,12 +105,13 @@ class ProfileActivity : AppCompatActivity() {
                     gson()
                 }
             }
+            //fetching donated pets
             val res: HttpResponse = client.get(url) {
                 headers {
                     append("userid", user.id)
                 }
             }
-             if(res.status.value == 200) {
+            if(res.status.value == 200) {
                 petsListDonated = res.body()
                 client.close()
             } else {
@@ -83,11 +119,32 @@ class ProfileActivity : AppCompatActivity() {
                 client.close()
             }
         }
-        if(error) {
-            val intent = Intent(this,  HomeActivity::class.java)
-            intent.putExtra("user", user)
-            Toast.makeText(this, "Error while fetching pets list", Toast.LENGTH_SHORT).show()
-            startActivity(intent)
+        return error
+    }
+
+    private fun fetchAdoptedList() : Boolean {
+        var error = false
+        runBlocking {
+            var url = getString(R.string.server) + "/userPets"
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            //fetching donated pets
+            val res: HttpResponse = client.get(url) {
+                headers {
+                    append("userid", user.id)
+                }
+            }
+            if(res.status.value == 200) {
+                petsListAdopted = res.body()
+                client.close()
+            } else {
+                error = true
+                client.close()
+            }
         }
+        return error
     }
 }

@@ -7,9 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Petland-Mobile.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Repos.Petland-Mobile.app.unitTest.iml" />
     </modules>
   </component>
 </project>
