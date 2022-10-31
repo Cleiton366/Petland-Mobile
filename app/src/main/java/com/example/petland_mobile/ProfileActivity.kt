@@ -10,7 +10,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petland_mobile.adapters.CardAdapter
+import com.example.petland_mobile.adapters.PetCardAdapter
 import com.example.petland_mobile.models.Pet
 import com.example.petland_mobile.models.User
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -53,13 +53,13 @@ class ProfileActivity : AppCompatActivity() {
 
             //populating recyclerview with arrays data
             var recyclerview = findViewById<RecyclerView>(R.id.recycler_view_donated_list)
-            var adapter = CardAdapter(petsListDonated)
+            var adapter = PetCardAdapter(petsListDonated)
 
             recyclerview.layoutManager = LinearLayoutManager(this)
             recyclerview.adapter = adapter
 
             recyclerview = findViewById<RecyclerView>(R.id.recycler_view_adopted_list)
-            adapter = CardAdapter(petsListAdopted)
+            adapter = PetCardAdapter(petsListAdopted)
 
             recyclerview.layoutManager = LinearLayoutManager(this)
             recyclerview.adapter = adapter

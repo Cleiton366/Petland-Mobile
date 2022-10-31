@@ -35,6 +35,14 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("user", user)
             startActivity(intent)
         }
+
+        //Open friendlist
+        val friendlistCard : CardView = findViewById(R.id.friend_list_card)
+        friendlistCard.setOnClickListener {
+            val intent = Intent(this,  FriendList::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
         
         //open user profile
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
