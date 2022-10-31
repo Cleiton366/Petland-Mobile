@@ -14,15 +14,18 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="Petland"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetlandMobile"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31"
-        android:requestLegacyExternalStorage="true">
+        tools:targetApi="31">
+        <activity
+            android:name=".FriendList"
+            android:exported="false" />
         <activity
             android:name=".AdoptionForm"
-        tools:targetApi="31"/>
+            tools:targetApi="31" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
