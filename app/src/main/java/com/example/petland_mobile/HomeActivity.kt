@@ -36,17 +36,25 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //adopt cat
-        val adoptResearchCat : CardView = findViewById(R.id.adoptCatCard)
-        adoptResearchCat.setOnClickListener { val intent = Intent (this, AdoptResearch::class.java)
+        //Open friendlist
+        val friendlistCard : CardView = findViewById(R.id.friend_list_card)
+        friendlistCard.setOnClickListener {
+            val intent = Intent(this,  FriendList::class.java)
             intent.putExtra("user", user)
-            startActivity(intent) }
-
-
+            startActivity(intent)
+        }
+        
+        //open user profile
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setOnClickListener {
+            val intent = Intent(this,  ProfileActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
     }
 
     private fun loadUserImg(url : String) {
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(Uri.parse(url))
+        imageView.setImageURI(url)
     }
 }

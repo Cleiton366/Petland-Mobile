@@ -4,11 +4,12 @@
     <string name="home_text">PetLand is a platform where you can adopt pets or help them get a new family.</string>
     <string name="signin_google">Sign in with Google</string>
     <string name="client_id">626832051163-k77a5fp4vmdgkuf6p4t6adoajqc03kem.apps.googleusercontent.com</string>
-    <string name="server">http://192.168.1.103:4000</string>
+    <string name="server">http://192.168.0.6:4000</string>
     <string name="tittle_choose_option">What do you want to do?</string>
     <string name="Adopt_Cat_Card_Tittle">Adopt a cat</string>
     <string name="Adopt_Dog_Card_Tittle">Adopt a dog</string>
     <string name="Submit_Pet_Card_Tittle">Help a pet be adopted</string>
+    <string name="Friendlist_Card_tittle">My Friendlist</string>
     <string name="file_name">Choose a photo of the pet</string>
     <string name="pet_name">Name:</string>
     <string name="pet_city">City:</string>
@@ -20,7 +21,6 @@
     <string name="pet_type_2">Dog</string>
     <string name="submit_form_btn">Submit</string>
     <string name="cancel_form_btn">Cancel</string>
-    <string name="Filter_title">Filter</string>
 
     <string-array name="pet_medical_condition_options">
         <item>Healthy</item>
@@ -36,4 +36,8 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string name="pets_adopted">Pets Adopted</string>
+    <string name="pets_donated">Pets Donated</string>
+    <string name="no_pets">No Pets Adopted or Donated Yet :-(</string>
+    <string name="no_pets_description">Once you adopted or donated a pet they will appear here.</string>
 </resources>
