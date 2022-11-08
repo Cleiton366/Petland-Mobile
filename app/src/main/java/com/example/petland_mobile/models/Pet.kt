@@ -1,6 +1,11 @@
 package com.example.petland_mobile.models
 
-class Pet {
+var petList = mutableListOf<Pet>()
+
+val PET_EXTRA = "petExtra"
+
+
+class Pet : java.io.Serializable {
     lateinit var petid : String
     lateinit var donatorid : String
     lateinit var ownerid : String
