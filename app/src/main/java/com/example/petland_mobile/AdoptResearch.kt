@@ -42,6 +42,14 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
         fetchPetList()
         allPetsListView()
 
+        //open user profile
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setOnClickListener {
+            val intent = Intent(this,  ProfileActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
+
     }
 
     override fun onClick(pet: Pet) {
