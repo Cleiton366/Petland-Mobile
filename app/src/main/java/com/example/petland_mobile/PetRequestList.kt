@@ -2,6 +2,7 @@ package com.example.petland_mobile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.adapters.UserCardAdapter
@@ -69,7 +70,9 @@ class PetRequestList : AppCompatActivity() {
                 names[i],
                 "",
                 avatarUrl[i]
+
             )
+
             newRequestlist.add(i, user)
         }
         requestlist = newRequestlist
