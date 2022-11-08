@@ -215,7 +215,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:src="@drawable/request_icon"
+                android:src="@drawable/request"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="30dp"
                 app:layout_constraintHorizontal_bias="0.847"
