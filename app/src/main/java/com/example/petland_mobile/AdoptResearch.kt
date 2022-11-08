@@ -44,7 +44,7 @@ class AdoptResearch : AppCompatActivity() {
 
     private fun allPetsListView(){
 
-        val recyclerView : RecyclerView = findViewById(R.id.adoptCatCard)
+        val recyclerView : RecyclerView = findViewById(R.id.recycler_view_cat_Card)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val adapter = AdapterCard(petList)
@@ -52,9 +52,10 @@ class AdoptResearch : AppCompatActivity() {
 
     }
 
-    private fun fetchPetList () {
+    private fun fetchPetList () : Boolean{
+        var error = false
         runBlocking {
-            var url = getString(R.string.server) + "/pet"
+            var url = getString(R.string.server) + "/pet/Cat/all"
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
                     gson()
@@ -63,9 +64,14 @@ class AdoptResearch : AppCompatActivity() {
             val res: HttpResponse = client.get(url)
             if(res.status.value == 200) {
                 petList = res.body()
+                client.close()
+            }else {
+                error = true
+                client.close()
             }
-            client.close()
         }
+
+        return error
     }
 
     private fun loadUserImg(url : String) {

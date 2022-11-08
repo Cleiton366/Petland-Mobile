@@ -8,10 +8,10 @@ class HolderCardView (private val cardCellBinding: CellCardBinding)
     : RecyclerView.ViewHolder(cardCellBinding.root) {
     fun bindPet(petForm : Pet) {
 
-        cardCellBinding.petName.text = petForm.petname
-        cardCellBinding.petAge.text = petForm.age.toString()
-        cardCellBinding.petCity.text = petForm.city.toString()
-        cardCellBinding.petMedicalCondition.text = petForm.medicalcondition.toString()
+        cardCellBinding.petName.text = "Name: ${petForm.petname}"
+        cardCellBinding.petAge.text = "Age: ${petForm.age}"
+        cardCellBinding.petCity.text = "City:${petForm.city}"
+        cardCellBinding.petMedicalCondition.text = "medical Condition: ${petForm.medicalcondition}"
         cardCellBinding.petPhoto.setImageURI(petForm.petphoto)
     }
 }

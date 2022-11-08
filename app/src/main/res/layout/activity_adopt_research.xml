@@ -10,8 +10,9 @@
     <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintPetLayout"
@@ -63,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/Filter_title"
+
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -72,8 +73,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    </LinearLayout>
-    
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_cat_Card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
+    </LinearLayout>
 
 </ScrollView>

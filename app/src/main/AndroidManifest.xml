@@ -27,6 +27,9 @@
             android:name=".AdoptionForm"
             tools:targetApi="31" />
         <activity
+            android:name=".AdoptResearch"
+            tools:targetApi="31" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity

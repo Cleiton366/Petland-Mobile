@@ -28,6 +28,12 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         loadUserImg(user.avatarurl)
 
+        //adopt cat
+        val adoptResearchCat : CardView = findViewById(R.id.adoptCatCard)
+        adoptResearchCat.setOnClickListener { val intent = Intent (this, AdoptResearch::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent) }
+
         //submit adoption form card event handler
         val submitAdoptionCard : CardView = findViewById(R.id.submitPetCard)
         submitAdoptionCard.setOnClickListener {
