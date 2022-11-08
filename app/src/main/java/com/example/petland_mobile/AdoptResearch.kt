@@ -99,5 +99,4 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
         imageView.setImageURI(Uri.parse(url))
     }
 
-
 }

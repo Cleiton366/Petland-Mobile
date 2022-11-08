@@ -25,6 +25,8 @@ class PetInfo : AppCompatActivity() {
             user = newUser
         }
 
+       // loadUserImg(user.avatarurl)
+
         binding = ActivityPetInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -75,6 +77,11 @@ class PetInfo : AppCompatActivity() {
             }
         }
         return null
+    }
+
+    private fun loadUserImg(url : String) {
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setImageURI(url)
     }
 
 }
