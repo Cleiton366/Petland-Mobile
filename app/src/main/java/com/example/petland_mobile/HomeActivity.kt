@@ -57,6 +57,14 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("user", user)
             startActivity(intent)
         }
+        //Open request list
+        val requestListCard : CardView = findViewById(R.id.request_Card)
+        requestListCard.setOnClickListener {
+            val intent = Intent(this, PetRequestList::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
+
     }
 
     private fun loadUserImg(url : String) {
