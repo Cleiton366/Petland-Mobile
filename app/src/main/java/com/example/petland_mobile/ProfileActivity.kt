@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.adapters.PetCardAdapter
 import com.example.petland_mobile.models.Pet
+import com.example.petland_mobile.models.ProfileInfo
 import com.example.petland_mobile.models.User
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
@@ -26,17 +27,27 @@ import kotlinx.coroutines.runBlocking
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var user : User
+    private lateinit var loggedUser: User
     private lateinit var petsListDonated : MutableList<Pet>
     private lateinit var petsListAdopted : MutableList<Pet>
+    var isVisitingOtherProfile : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
 
         //getting user info
-        val newUser = intent.extras?.get("user") as? User
-        newUser ?.let {
-            user = newUser
+        val profileInfo = intent.extras?.get("profileInfo") as? ProfileInfo
+
+        profileInfo?.user ?.let {
+            user = profileInfo.user!!
         }
+        profileInfo?.loggedUser ?.let {
+            loggedUser = profileInfo.loggedUser
+        }
+        profileInfo?.isVisitingOtherProfile ?.let {
+            isVisitingOtherProfile = profileInfo.isVisitingOtherProfile
+        }
+
         super.onCreate(savedInstanceState)
         Fresco.initialize(this)
         setContentView(R.layout.activity_profile)
@@ -72,17 +83,36 @@ class ProfileActivity : AppCompatActivity() {
             listContainer.isVisible = false
         }
 
+        val followBtn = findViewById<LinearLayout>(R.id.follow_btn)
+        if(!isVisitingOtherProfile) {
+            followBtn.isInvisible = true
+        }
+
+        followBtn.setOnClickListener {
+            //TODO
+        }
+
     }
 
     private fun loadUserInfo() {
+
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(user.avatarurl)
+        imageView.setImageURI(loggedUser.avatarurl)
 
-        val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
-        profileImageView.setImageURI(user.avatarurl)
+        if (isVisitingOtherProfile) {
+            val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
+            profileImageView.setImageURI(user.avatarurl)
 
-        val userName = findViewById<TextView>(R.id.username)
-        userName.text = user.username
+            val userName = findViewById<TextView>(R.id.username)
+            userName.text = user.username
+        } else {
+            val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
+            profileImageView.setImageURI(loggedUser.avatarurl)
+
+            val userName = findViewById<TextView>(R.id.username)
+            userName.text = loggedUser.username
+        }
+
     }
 
     private fun getPetsList () {
@@ -97,6 +127,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun fetchDonatedList() : Boolean{
+
+        var userId : String
+
+        if (isVisitingOtherProfile) {
+            userId = user.id
+        } else userId = loggedUser.id
+
         var error = false
         runBlocking {
             var url = getString(R.string.server) + "/donatedPets"
@@ -108,7 +145,7 @@ class ProfileActivity : AppCompatActivity() {
             //fetching donated pets
             val res: HttpResponse = client.get(url) {
                 headers {
-                    append("userid", user.id)
+                    append("userid", userId)
                 }
             }
             if(res.status.value == 200) {
@@ -123,6 +160,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun fetchAdoptedList() : Boolean {
+
+        var userId : String
+
+        if (isVisitingOtherProfile) {
+            userId = user.id
+        } else userId = loggedUser.id
+
         var error = false
         runBlocking {
             var url = getString(R.string.server) + "/userPets"
@@ -134,7 +178,7 @@ class ProfileActivity : AppCompatActivity() {
             //fetching donated pets
             val res: HttpResponse = client.get(url) {
                 headers {
-                    append("userid", user.id)
+                    append("userid", userId)
                 }
             }
             if(res.status.value == 200) {

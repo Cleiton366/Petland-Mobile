@@ -8,25 +8,26 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import com.example.petland_mobile.models.ProfileInfo
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var user : User
+    private lateinit var loggedUser : User
     override fun onCreate(savedInstanceState: Bundle?) {
 
         supportActionBar?.hide()
 
         //getting user info
-        val newUser = intent.extras?.get("user") as? User
-        newUser ?.let {
-            user = newUser
+        val newLoggedUser = intent.extras?.get("user") as? User
+        newLoggedUser ?.let {
+            loggedUser = newLoggedUser
         }
 
         super.onCreate(savedInstanceState)
         Fresco.initialize(this)
         setContentView(R.layout.activity_home)
-        loadUserImg(user.avatarurl)
+        loadUserImg(loggedUser.avatarurl)
 
         //adopt cat
         val adoptResearchCat : CardView = findViewById(R.id.adoptCatCard)
@@ -38,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
         val submitAdoptionCard : CardView = findViewById(R.id.submitPetCard)
         submitAdoptionCard.setOnClickListener {
             val intent = Intent(this,  AdoptionForm::class.java)
-            intent.putExtra("user", user)
+            intent.putExtra("user", loggedUser)
             startActivity(intent)
         }
 
@@ -53,8 +54,9 @@ class HomeActivity : AppCompatActivity() {
         //open user profile
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setOnClickListener {
+            val profileInfo = ProfileInfo(loggedUser)
             val intent = Intent(this,  ProfileActivity::class.java)
-            intent.putExtra("user", user)
+            intent.putExtra("profileInfo", profileInfo)
             startActivity(intent)
         }
     }
