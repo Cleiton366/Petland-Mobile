@@ -1,25 +1,27 @@
 package com.example.petland_mobile
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.content.Intent
 import android.net.Uri
-import com.example.petland_mobile.models.*
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.petland_mobile.Interface.PetClickListener
 import com.example.petland_mobile.adapters.AdapterCard
-import com.facebook.drawee.backends.pipeline.Fresco
+import com.example.petland_mobile.models.*
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import io.ktor.client.engine.cio.*
-import kotlinx.coroutines.runBlocking
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.gson.*
+import kotlinx.coroutines.runBlocking
 
 
-class AdoptResearch : AppCompatActivity() {
+class AdoptResearch : AppCompatActivity(), PetClickListener {
 
     private lateinit var petList : MutableList<Pet>
     private lateinit var user : User
@@ -40,16 +42,34 @@ class AdoptResearch : AppCompatActivity() {
         fetchPetList()
         allPetsListView()
 
+        //open user profile
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+        imageView.setOnClickListener {
+            val intent = Intent(this,  ProfileActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+        }
+
+    }
+
+    override fun onClick(pet: Pet) {
+        val intent = Intent(applicationContext, PetInfo::class.java)
+        intent.putExtra("pet", pet)
+        startActivity(intent)
     }
 
     private fun allPetsListView(){
 
         val recyclerView : RecyclerView = findViewById(R.id.recycler_view_cat_Card)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val context = this
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = AdapterCard(petList, context)
+        }
+        //recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val adapter = AdapterCard(petList)
-        recyclerView.adapter = adapter
-
+        //val adapter = AdapterCard(petList, this)
+        //recyclerView.adapter = adapter
     }
 
     private fun fetchPetList () : Boolean{
@@ -78,4 +98,5 @@ class AdoptResearch : AppCompatActivity() {
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setImageURI(Uri.parse(url))
     }
+
 }

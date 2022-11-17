@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="360dp"
+        android:layout_height="120dp"
+        app:cardBackgroundColor="@color/secondaryColor"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/request_list_user_photo"
+                android:layout_width="82dp"
+                android:layout_height="88dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                app:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/request_list_user_name"
+                android:layout_width="125dp"
+                android:layout_height="64dp"
+                android:layout_margin="20dp"
+                android:textSize="10pt"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/botton_accept"
+                    android:text="@string/bottoAccept" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/botton_reject"
+                    android:text="@string/bottonReject" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
