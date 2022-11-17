@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.petland_mobile.adapters.RequestCardAdapter
 import com.example.petland_mobile.adapters.UserCardAdapter
 import com.example.petland_mobile.models.User
 import com.facebook.drawee.view.SimpleDraweeView
@@ -30,7 +31,7 @@ class PetRequestList : AppCompatActivity() {
 
         //populating recyclerview with arrays data
         var recyclerview = findViewById<RecyclerView>(R.id.requestList_recyclerview)
-        var adapter = UserCardAdapter(requestlist)
+        var adapter = RequestCardAdapter(requestlist)
 
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = adapter
@@ -70,9 +71,7 @@ class PetRequestList : AppCompatActivity() {
                 names[i],
                 "",
                 avatarUrl[i]
-
             )
-
             newRequestlist.add(i, user)
         }
         requestlist = newRequestlist

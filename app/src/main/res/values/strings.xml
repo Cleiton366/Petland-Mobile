@@ -23,7 +23,8 @@
     <string name="cancel_form_btn">Cancel</string>
     <string name="Request_pet_list">Request Pet List</string>
     <string name="bottoAccept"> Accept</string>
-    <string name="bottonReject"> Rejeitar </string>
+    <string name="bottonReject"> Reject </string>
+    <string name="request_adopt"> Request Adopt</string>
 
     <string-array name="pet_medical_condition_options">
         <item>Healthy</item>
