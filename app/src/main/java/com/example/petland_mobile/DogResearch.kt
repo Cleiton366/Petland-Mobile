@@ -2,14 +2,14 @@ package com.example.petland_mobile
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.Interface.PetClickListener
 import com.example.petland_mobile.adapters.AdapterCard
-import com.example.petland_mobile.models.*
+import com.example.petland_mobile.models.Pet
+import com.example.petland_mobile.models.User
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -20,13 +20,14 @@ import io.ktor.client.statement.*
 import io.ktor.serialization.gson.*
 import kotlinx.coroutines.runBlocking
 
-
-class AdoptResearch : AppCompatActivity(), PetClickListener {
+class DogResearch : AppCompatActivity(), PetClickListener {
 
     private lateinit var petList : MutableList<Pet>
     private lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_dog_research)
 
         //getting user info
         val newUser = intent.extras?.get("user") as? User
@@ -34,21 +35,17 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
             user = newUser
         }
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_adopt_research)
-
-        loadUserImg(user.avatarurl)
-
+        //loadUserImg(user.avatarurl)
         fetchPetList()
         allPetsListView()
 
         //open user profile
-        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+       /* val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setOnClickListener {
             val intent = Intent(this,  ProfileActivity::class.java)
             intent.putExtra("user", user)
             startActivity(intent)
-        }
+        }*/
 
     }
 
@@ -60,7 +57,7 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
 
     private fun allPetsListView(){
 
-        val recyclerView : RecyclerView = findViewById(R.id.recycler_view_cat_Card)
+        val recyclerView : RecyclerView = findViewById(R.id.dogRequestList_recyclerview)
         val context = this
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -71,7 +68,7 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
     private fun fetchPetList () : Boolean{
         var error = false
         runBlocking {
-            var url = getString(R.string.server) + "/pet/Cat/all"
+            var url = getString(R.string.server) + "/pet/Dog/all"
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
                     gson()
@@ -93,5 +90,4 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setImageURI(Uri.parse(url))
     }
-
 }

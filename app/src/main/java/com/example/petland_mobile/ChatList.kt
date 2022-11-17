@@ -6,59 +6,34 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petland_mobile.Interface.ChatClickListener
-import com.example.petland_mobile.adapters.RequestCardAdapter
-import com.example.petland_mobile.adapters.UserCardAdapter
-import com.example.petland_mobile.models.Pet
+import com.example.petland_mobile.adapters.ChatListAdapter
 import com.example.petland_mobile.models.User
 import com.facebook.drawee.view.SimpleDraweeView
 
-class PetRequestList : AppCompatActivity(), ChatClickListener {
+class ChatList : AppCompatActivity() {
 
-    private lateinit var user : User
-    private lateinit var requestlist : MutableList<User>
-    private lateinit var clickListener: ChatClickListener
+    private lateinit var chatlist : MutableList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        //getting user info
-        val newUser = intent.extras?.get("user") as? User
-        newUser ?.let {
-            user = newUser
-        }
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pet_request_list)
+        setContentView(R.layout.activity_chat_list)
 
-        loadUserInfo()
-        fetchFriendlist()
+        fetchChatlist()
 
-        //populating recyclerview with arrays data
-
-        var recyclerview = findViewById<RecyclerView>(R.id.requestList_recyclerview)
-        var adapter = RequestCardAdapter(requestlist, this)
+        var recyclerview = findViewById<RecyclerView>(R.id.recycler_view_chatList_Card)
+        var adapter = ChatListAdapter(chatlist)
 
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = adapter
 
     }
-     /*override fun chatListRequest(user: User){
-        val intent = Intent(applicationContext, ChatList::class.java)
-        intent.putExtra("user", user)
-        startActivity(intent)
-    }*/
 
-    private fun loadUserInfo() {
-        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(user.avatarurl)
+    private fun fetchChatlist () {
+        mockChatList()
     }
 
-    private fun fetchFriendlist () {
-        mockFriendList()
-    }
-
-    private fun mockFriendList() {
-        var newRequestlist : MutableList<User> = ArrayList()
+    private fun mockChatList() {
+        var newChatList : MutableList<User> = ArrayList()
         val names = arrayOf<String> ("Lily Sullivan", "Shannon Stanley",
             "Kristen Ortiz", "Aidyn Mccray", "Molly Wilkerson", "Vihaan Hess", "Korbin Conrad",
             "Gabriel Lane", "Francisco Castro", "Ariel Parks", "Eve Wilkins", "Paisley Cummings")
@@ -82,15 +57,9 @@ class PetRequestList : AppCompatActivity(), ChatClickListener {
                 "",
                 avatarUrl[i]
             )
-            newRequestlist.add(i, user)
+            newChatList.add(i, user)
         }
-        requestlist = newRequestlist
-    }
-
-    override fun chatListRequest(user: User) {
-        val intent = Intent(applicationContext, ChatList::class.java)
-        intent.putExtra("user", user)
-        startActivity(intent)
+        chatlist = newChatList
     }
 
 }

@@ -15,7 +15,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 class PetInfo : AppCompatActivity() {
 
     private lateinit var  binding: ActivityPetInfoBinding
-    private lateinit var user1 : User
 
     private lateinit var user : User
 

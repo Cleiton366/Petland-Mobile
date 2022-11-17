@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="360dp"
         android:layout_height="120dp"
-        app:cardBackgroundColor="@color/secondaryColor"
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="5dp"
         app:cardCornerRadius="10dp"
         android:layout_marginBottom="10dp">
@@ -38,19 +38,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/secondaryColor"
                 android:orientation="vertical">
 
-                <Button
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/botton_accept"
-                    android:text="@string/bottoAccept" />
+                    android:layout_height="match_parent"
+                    android:background="@color/primaryColor">
 
-                <Button
+                    <Button
+                        android:id="@+id/acceptButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/botton_accept"
+                        android:text="@string/bottoAccept" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/botton_reject"
-                    android:text="@string/bottonReject" />
+                    android:layout_height="match_parent"
+                    android:background="@color/primaryColor">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/botton_reject"
+                            android:text="@string/bottonReject" />
+
+
+                </androidx.cardview.widget.CardView>
+
 
             </LinearLayout>
 
