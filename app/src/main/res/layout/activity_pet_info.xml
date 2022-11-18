@@ -123,10 +123,22 @@
                 app:layout_constraintBottom_toBottomOf="parent"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.216"
+                app:layout_constraintHorizontal_bias="0.082"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/username1"
+                android:layout_width="256dp"
+                android:layout_height="18dp"
+
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.664"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button"

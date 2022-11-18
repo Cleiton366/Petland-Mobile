@@ -10,6 +10,7 @@ import com.example.petland_mobile.Interface.PetClickListener
 import com.example.petland_mobile.adapters.AdapterCard
 import com.example.petland_mobile.models.Pet
 import com.example.petland_mobile.models.User
+import com.example.petland_mobile.models.PetInfo
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -24,6 +25,7 @@ class DogResearch : AppCompatActivity(), PetClickListener {
 
     private lateinit var petList : MutableList<Pet>
     private lateinit var user : User
+    private lateinit var petInfo : com.example.petland_mobile.models.PetInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,23 +37,30 @@ class DogResearch : AppCompatActivity(), PetClickListener {
             user = newUser
         }
 
-        //loadUserImg(user.avatarurl)
+        loadUserImg(user.avatarurl)
+
+        val userName = intent.extras?.get("user") as? com.example.petland_mobile.models.PetInfo
+        userName ?.let {
+            petInfo = userName
+        }
+
         fetchPetList()
         allPetsListView()
 
-        //open user profile
-       /* val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
+       /* //open user profile
+        val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setOnClickListener {
             val intent = Intent(this,  ProfileActivity::class.java)
-            intent.putExtra("user", user)
+            intent.putExtra("user", petInfo.user)
             startActivity(intent)
         }*/
 
     }
 
     override fun onClick(pet: Pet) {
+        val petInfo = PetInfo(pet, user)
         val intent = Intent(applicationContext, PetInfo::class.java)
-        intent.putExtra("pet", pet)
+        intent.putExtra("petInfo", petInfo)
         startActivity(intent)
     }
 

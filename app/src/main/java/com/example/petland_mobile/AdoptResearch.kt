@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.Interface.PetClickListener
@@ -25,6 +24,7 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
 
     private lateinit var petList : MutableList<Pet>
     private lateinit var user : User
+    private lateinit var petInfo : com.example.petland_mobile.models.PetInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,22 +39,27 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
 
         loadUserImg(user.avatarurl)
 
+        val userName = intent.extras?.get("user") as? com.example.petland_mobile.models.PetInfo
+        userName ?.let {
+            petInfo = userName
+        }
+
         fetchPetList()
         allPetsListView()
 
-        //open user profile
+        /*//open user profile
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
         imageView.setOnClickListener {
             val intent = Intent(this,  ProfileActivity::class.java)
             intent.putExtra("user", user)
             startActivity(intent)
-        }
-
+        }*/
     }
 
     override fun onClick(pet: Pet) {
+        val petInfo = PetInfo(pet, user)
         val intent = Intent(applicationContext, PetInfo::class.java)
-        intent.putExtra("pet", pet)
+        intent.putExtra("petInfo", petInfo)
         startActivity(intent)
     }
 

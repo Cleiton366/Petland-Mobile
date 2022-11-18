@@ -6,25 +6,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.petland_mobile.databinding.ActivityPetInfoBinding
-import com.example.petland_mobile.models.PET_EXTRA
 import com.example.petland_mobile.models.Pet
 import com.example.petland_mobile.models.User
+import com.example.petland_mobile.models.PetInfo
 import com.example.petland_mobile.models.petList
 import com.facebook.drawee.view.SimpleDraweeView
 
 class PetInfo : AppCompatActivity() {
 
     private lateinit var  binding: ActivityPetInfoBinding
-
     private lateinit var user : User
+    private lateinit var pet : Pet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //getting user info
-        val newUser = intent.extras?.get("user") as? User
-        newUser ?.let {
-            user = newUser
+        val petInfo = intent.extras?.get("petInfo") as? PetInfo
+        petInfo?.user ?.let {
+            user = petInfo.user!!
+        }
+        petInfo?.pet ?.let {
+            pet = petInfo.pet!!
         }
 
         binding = ActivityPetInfoBinding.inflate(layoutInflater)
@@ -33,21 +36,10 @@ class PetInfo : AppCompatActivity() {
         //loadUserImg(user.avatarurl)
 
         val pet  = intent.extras?.get("pet")
-        val test = 1
-        /*
-        val petPos = intent.getIntExtra(PET_EXTRA, -1)
-        val pets = petFromPos(petPos)
-        if(pets != null){
-            binding.petPhoto.setImageURI(pets.petphoto)
-            binding.petName.text = pets.petname
-            binding.petAge.text = pets.age
-            binding.petCity.text = pets.city
-            binding.petMedicalCondition.text = pets.medicalcondition
-        }*/
-        updateUI(pet as Pet)
+
+        updateUI(petInfo as PetInfo)
 
         //open user profile
-
             val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
             imageView.setOnClickListener {
                 val intent = Intent(this,  ProfileActivity::class.java)
@@ -57,24 +49,31 @@ class PetInfo : AppCompatActivity() {
 
     }
 
-    private fun updateUI(pet : Pet) {
+    private fun updateUI(petInfo: PetInfo) {
         val petPhoto = findViewById<SimpleDraweeView>(R.id.pet_photo)
         val petName = findViewById<TextView>(R.id.pet_name)
         val petAge = findViewById<TextView>(R.id.pet_age)
         val petCity = findViewById<TextView>(R.id.pet_city)
         val medicalCond = findViewById<TextView>(R.id.pet_medical_condition)
+        val profilePhoto = findViewById<SimpleDraweeView>(R.id.profile_image)
+        val profile_image2 = findViewById<SimpleDraweeView>(R.id.profile_image2)
+        val username1 = findViewById<TextView>(R.id.username1)
 
-        petName.setText("Name: " + pet.petname)
-        petPhoto.setImageURI( pet.petphoto)
-        petAge.setText("Age: " + pet.age)
-        petCity.setText("City: " + pet.city)
-        medicalCond.setText("Medical Condition: " + pet.medicalcondition)
+        petName.setText("Name: " + petInfo.pet?.petname)
+        petPhoto.setImageURI( petInfo.pet?.petphoto)
+        petAge.setText("Age: " + petInfo.pet?.age)
+        petCity.setText("City: " + petInfo.pet?.city)
+        medicalCond.setText("Medical Condition: " + petInfo.pet?.medicalcondition)
+        profilePhoto.setImageURI(petInfo.user?.avatarurl)
+        profile_image2.setImageURI(petInfo.user?.avatarurl)
+
+        username1.setText(petInfo.user?.username)
+
     }
 
     private fun petFromPos(petPos: Int): Pet? {
 
         for( pets in petList ){
-
             if(pets.petid == petPos.toString()){
                 return pets
             }
