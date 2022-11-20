@@ -29,10 +29,31 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         loadUserImg(loggedUser.avatarurl)
 
+        //adopt cat
+        val adoptResearchCat : CardView = findViewById(R.id.adoptCatCard)
+        adoptResearchCat.setOnClickListener { val intent = Intent (this, AdoptResearch::class.java)
+            intent.putExtra("user", loggedUser)
+            startActivity(intent) }
+
+        //adopt Dog
+        val adoptResearchDog : CardView = findViewById(R.id.adoptDogCard)
+        adoptResearchDog.setOnClickListener { val intent = Intent (this, DogResearch::class.java)
+        intent.putExtra("user", loggedUser)
+            startActivity(intent)
+        }
+
         //submit adoption form card event handler
         val submitAdoptionCard : CardView = findViewById(R.id.submitPetCard)
         submitAdoptionCard.setOnClickListener {
             val intent = Intent(this,  AdoptionForm::class.java)
+            intent.putExtra("user", loggedUser)
+            startActivity(intent)
+        }
+
+        //Open friendlist
+        val friendlistCard : CardView = findViewById(R.id.friend_list_card)
+        friendlistCard.setOnClickListener {
+            val intent = Intent(this,  FriendList::class.java)
             intent.putExtra("user", loggedUser)
             startActivity(intent)
         }
@@ -45,6 +66,14 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("profileInfo", profileInfo)
             startActivity(intent)
         }
+        //Open request list
+        val requestListCard : CardView = findViewById(R.id.request_Card)
+        requestListCard.setOnClickListener {
+            val intent = Intent(this, PetRequestList::class.java)
+            intent.putExtra("user", loggedUser)
+            startActivity(intent)
+        }
+
     }
 
     private fun loadUserImg(url : String) {
