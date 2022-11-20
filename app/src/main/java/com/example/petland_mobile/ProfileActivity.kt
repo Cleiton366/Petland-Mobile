@@ -11,9 +11,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.adapters.PetCardAdapter
-import com.example.petland_mobile.models.Pet
-import com.example.petland_mobile.models.ProfileInfo
-import com.example.petland_mobile.models.User
+import com.example.petland_mobile.models.*
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
@@ -33,6 +31,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var petsListAdopted : MutableList<Pet>
     var isVisitingOtherProfile : Boolean = false
     private lateinit var userFriendlist: UserFriendlist
+    var isFriendListEmpty = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
@@ -102,11 +101,28 @@ class ProfileActivity : AppCompatActivity() {
             } else isFollowingText.text = getString(R.string.not_following_user)
         }
 
-        val userFollowers : TextView = findViewById(R.id.user_followers)
-        userFollowers.text = "Followers ${userFriendlist.followersQtd}"
+        if(!isFriendListEmpty) {
+            if(userFriendlist.followersQtd > 0) {
+                val userFollowers : TextView = findViewById(R.id.user_followers)
+                userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+            } else {
+                val userFollowers : TextView = findViewById(R.id.user_followers)
+                userFollowers.text = "Followers: 0"
+            }
 
-        val userFollowing : TextView = findViewById(R.id.user_following)
-        userFollowing.text = "Followers ${userFriendlist.followingQtd}"
+            if(userFriendlist.followingQtd > 0) {
+                val userFollowing : TextView = findViewById(R.id.user_following)
+                userFollowing.text = "Following: ${userFriendlist.followingQtd}"
+            } else {
+                val userFollowing : TextView = findViewById(R.id.user_following)
+                userFollowing.text = "Following: 0"
+            }
+        } else {
+            val userFollowing : TextView = findViewById(R.id.user_following)
+            userFollowing.text = "Following: 0"
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: 0"
+        }
 
         followBtn.setOnClickListener {
             var isFollowingText = findViewById<TextView?>(R.id.is_following_text)
@@ -253,6 +269,7 @@ class ProfileActivity : AppCompatActivity() {
                 userFriendlist = res.body()
                 client.close()
             } else {
+                isFriendListEmpty = true
                 client.close()
             }
         }
@@ -274,7 +291,7 @@ class ProfileActivity : AppCompatActivity() {
                 contentType(ContentType.Application.Json)
                 setBody(social)
             }
-            if(res.status.value == 200) {
+            if(res.status.value == 201) {
                 userFriendlist = res.body()
                 client.close()
             } else {
@@ -309,6 +326,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun isFollowing() : Boolean {
         var isFollowing = false
         val userId = user.id
+
+        if(isFriendListEmpty) return false
 
         for (user in userFriendlist.following) {
             if(user.id == userId) isFollowing = true
