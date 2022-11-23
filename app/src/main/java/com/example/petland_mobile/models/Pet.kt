@@ -6,6 +6,7 @@ val PET_EXTRA = "petExtra"
 
 
 class Pet : java.io.Serializable {
+    var donatorInfo : User? = null
     lateinit var petid : String
     lateinit var donatorid : String
     lateinit var ownerid : String

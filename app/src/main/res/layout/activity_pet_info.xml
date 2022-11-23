@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintPetLayout"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="55dp"
             android:background="@color/secondaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -26,11 +26,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/project_tittle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
+                android:textColor="@color/black"
                 android:textSize="10pt"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -40,8 +40,8 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/profile_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.847"
@@ -115,40 +115,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/profile_image2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                app:layout_constraintBottom_toBottomOf="parent"
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/profile_image_donation"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.082"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:roundAsCircle="true" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.045"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:roundAsCircle="true" />
 
-            <TextView
-                android:id="@+id/username1"
-                android:layout_width="256dp"
-                android:layout_height="18dp"
+                <TextView
+                    android:id="@+id/username1"
+                    android:layout_width="175dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.393"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.664"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/botton_accept"
                 android:text="@string/request_adopt"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:backgroundTint="@color/botton_accept"
-                app:layout_constraintHorizontal_bias="0.883"
+                app:layout_constraintHorizontal_bias="0.98"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></Button>
 

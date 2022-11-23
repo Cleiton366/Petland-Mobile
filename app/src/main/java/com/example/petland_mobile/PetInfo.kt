@@ -56,7 +56,7 @@ class PetInfo : AppCompatActivity() {
         val petCity = findViewById<TextView>(R.id.pet_city)
         val medicalCond = findViewById<TextView>(R.id.pet_medical_condition)
         val profilePhoto = findViewById<SimpleDraweeView>(R.id.profile_image)
-        val profile_image2 = findViewById<SimpleDraweeView>(R.id.profile_image2)
+        val profile_image_donation = findViewById<SimpleDraweeView>(R.id.profile_image_donation)
         val username1 = findViewById<TextView>(R.id.username1)
 
         petName.setText("Name: " + petInfo.pet?.petname)
@@ -65,9 +65,10 @@ class PetInfo : AppCompatActivity() {
         petCity.setText("City: " + petInfo.pet?.city)
         medicalCond.setText("Medical Condition: " + petInfo.pet?.medicalcondition)
         profilePhoto.setImageURI(petInfo.user?.avatarurl)
-        profile_image2.setImageURI(petInfo.user?.avatarurl)
+        profile_image_donation.setImageURI(petInfo.pet?.donatorInfo?.avatarurl)
 
-        username1.setText(petInfo.user?.username)
+        username1.setText(petInfo.pet?.donatorInfo?.username)
+
 
     }
 
