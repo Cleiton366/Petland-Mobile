@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import com.example.petland_mobile.databinding.ActivityPetInfoBinding
 import com.example.petland_mobile.models.Pet
@@ -11,6 +12,17 @@ import com.example.petland_mobile.models.User
 import com.example.petland_mobile.models.PetInfo
 import com.example.petland_mobile.models.petList
 import com.facebook.drawee.view.SimpleDraweeView
+import com.google.gson.Gson
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.serialization.gson.*
+import kotlinx.coroutines.runBlocking
 
 class PetInfo : AppCompatActivity() {
 
@@ -47,6 +59,32 @@ class PetInfo : AppCompatActivity() {
                 startActivity(intent)
             }
 
+        //val requestButton : Button = findViewById(R.id.buttonRequest)
+       // requestButton.setOnClickListener {
+          //  requestPet()
+        //}
+    }
+
+    private fun requestPet(){
+        var error = false
+        runBlocking {
+            var url = getString(R.string.server) + "/donationrequest/new"
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            val res: HttpResponse = client.post(url){
+                contentType(ContentType.Application.Json)
+                //setBody()
+            }
+            if(res.status.value == 200) {
+                println("success")
+            }else {
+                error = true
+                client.close()
+            }
+        }
     }
 
     private fun updateUI(petInfo: PetInfo) {
@@ -56,7 +94,7 @@ class PetInfo : AppCompatActivity() {
         val petCity = findViewById<TextView>(R.id.pet_city)
         val medicalCond = findViewById<TextView>(R.id.pet_medical_condition)
         val profilePhoto = findViewById<SimpleDraweeView>(R.id.profile_image)
-        val profile_image2 = findViewById<SimpleDraweeView>(R.id.profile_image2)
+        val profile_image_donation = findViewById<SimpleDraweeView>(R.id.profile_image_donation)
         val username1 = findViewById<TextView>(R.id.username1)
 
         petName.setText("Name: " + petInfo.pet?.petname)
@@ -65,9 +103,9 @@ class PetInfo : AppCompatActivity() {
         petCity.setText("City: " + petInfo.pet?.city)
         medicalCond.setText("Medical Condition: " + petInfo.pet?.medicalcondition)
         profilePhoto.setImageURI(petInfo.user?.avatarurl)
-        profile_image2.setImageURI(petInfo.user?.avatarurl)
+        profile_image_donation.setImageURI(petInfo.pet?.donatorInfo?.avatarurl)
 
-        username1.setText(petInfo.user?.username)
+        username1.setText(petInfo.pet?.donatorInfo?.username)
 
     }
 
