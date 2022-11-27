@@ -11,8 +11,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.adapters.PetCardAdapter
-import com.example.petland_mobile.models.Pet
-import com.example.petland_mobile.models.User
+import com.example.petland_mobile.models.*
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
@@ -21,29 +20,47 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import kotlinx.coroutines.runBlocking
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var user : User
+    private lateinit var loggedUser: User
     private lateinit var petsListDonated : MutableList<Pet>
     private lateinit var petsListAdopted : MutableList<Pet>
+    var isVisitingOtherProfile : Boolean = false
+    private lateinit var userFriendlist: UserFriendlist
+    var isFriendListEmpty = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
 
         //getting user info
-        val newUser = intent.extras?.get("user") as? User
-        newUser ?.let {
-            user = newUser
+        val profileInfo = intent.extras?.get("profileInfo") as? ProfileInfo
+
+        profileInfo?.user ?.let {
+            user = profileInfo.user!!
         }
+        profileInfo?.loggedUser ?.let {
+            loggedUser = profileInfo.loggedUser
+        }
+        profileInfo?.isVisitingOtherProfile ?.let {
+            isVisitingOtherProfile = profileInfo.isVisitingOtherProfile
+        }
+
         super.onCreate(savedInstanceState)
         Fresco.initialize(this)
         setContentView(R.layout.activity_profile)
 
         loadUserInfo()
         getPetsList()
+        fetchUserFriendlist()
 
+        updateUI()
+    }
+
+    private fun updateUI () {
         if(petsListAdopted.size > 0 || petsListDonated.size > 0) {
             //removing no pets message
             val noPetsMessage = findViewById<LinearLayout>(R.id.no_pets_container)
@@ -72,31 +89,119 @@ class ProfileActivity : AppCompatActivity() {
             listContainer.isVisible = false
         }
 
+        val followBtn = findViewById<LinearLayout>(R.id.follow_btn)
+        if(!isVisitingOtherProfile) {
+            followBtn.isInvisible = true
+        } else {
+            val isFollowing = isFollowing()
+            val isFollowingText : TextView = findViewById(R.id.is_following_text)
+
+            if(isFollowing) {
+                isFollowingText.text = getString(R.string.following_user)
+            } else isFollowingText.text = getString(R.string.not_following_user)
+        }
+
+        if(!isFriendListEmpty) {
+            if(userFriendlist.followersQtd > 0) {
+                val userFollowers : TextView = findViewById(R.id.user_followers)
+                userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+            } else {
+                val userFollowers : TextView = findViewById(R.id.user_followers)
+                userFollowers.text = "Followers: 0"
+            }
+
+            if(userFriendlist.followingQtd > 0) {
+                val userFollowing : TextView = findViewById(R.id.user_following)
+                userFollowing.text = "Following: ${userFriendlist.followingQtd}"
+            } else {
+                val userFollowing : TextView = findViewById(R.id.user_following)
+                userFollowing.text = "Following: 0"
+            }
+        } else {
+            val userFollowing : TextView = findViewById(R.id.user_following)
+            userFollowing.text = "Following: 0"
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: 0"
+        }
+
+        followBtn.setOnClickListener {
+            var isFollowingText = findViewById<TextView?>(R.id.is_following_text)
+
+            if(isFollowingText.text == getString(R.string.following_user)) {
+                unfollowUser()
+                isFollowingText.text = getString(R.string.not_following_user)
+            } else {
+                followUser()
+                isFollowingText.text = getString(R.string.following_user)
+            }
+        }
+    }
+
+    private fun increaseFollowers () {
+        userFriendlist.followersQtd += 1
+        runOnUiThread {
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+        }
+    }
+    private fun decreaseFollowers () {
+        userFriendlist.followersQtd -= 1
+        runOnUiThread {
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+        }
     }
 
     private fun loadUserInfo() {
+
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
-        imageView.setImageURI(user.avatarurl)
+        imageView.setImageURI(loggedUser.avatarurl)
 
-        val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
-        profileImageView.setImageURI(user.avatarurl)
+        if (isVisitingOtherProfile) {
+            val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
+            profileImageView.setImageURI(user.avatarurl)
 
-        val userName = findViewById<TextView>(R.id.username)
-        userName.text = user.username
+            val userName = findViewById<TextView>(R.id.username)
+            userName.text = user.username
+        } else {
+            val profileImageView = findViewById<SimpleDraweeView>(R.id.profile_image_full)
+            profileImageView.setImageURI(loggedUser.avatarurl)
+
+            val userName = findViewById<TextView>(R.id.username)
+            userName.text = loggedUser.username
+        }
+
     }
 
     private fun getPetsList () {
-        var error : Boolean = fetchAdoptedList()
-        error = fetchDonatedList()
+        var error: Boolean = fetchDonatedList()
+
         if(error) {
             val intent = Intent(this,  HomeActivity::class.java)
             intent.putExtra("user", user)
             Toast.makeText(this, "Error while fetching pets list", Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
+
+        error = fetchAdoptedList()
+
+        if(error) {
+            val intent = Intent(this,  HomeActivity::class.java)
+            intent.putExtra("user", user)
+            Toast.makeText(this, "Error while fetching pets list", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
+        }
+
     }
 
     private fun fetchDonatedList() : Boolean{
+
+        var userId : String
+
+        if (isVisitingOtherProfile) {
+            userId = user.id
+        } else userId = loggedUser.id
+
         var error = false
         runBlocking {
             var url = getString(R.string.server) + "/donatedPets"
@@ -108,7 +213,7 @@ class ProfileActivity : AppCompatActivity() {
             //fetching donated pets
             val res: HttpResponse = client.get(url) {
                 headers {
-                    append("userid", user.id)
+                    append("userid", userId)
                 }
             }
             if(res.status.value == 200) {
@@ -123,6 +228,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun fetchAdoptedList() : Boolean {
+
+        var userId : String
+
+        if (isVisitingOtherProfile) {
+            userId = user.id
+        } else userId = loggedUser.id
+
         var error = false
         runBlocking {
             var url = getString(R.string.server) + "/userPets"
@@ -134,7 +246,7 @@ class ProfileActivity : AppCompatActivity() {
             //fetching donated pets
             val res: HttpResponse = client.get(url) {
                 headers {
-                    append("userid", user.id)
+                    append("userid", userId)
                 }
             }
             if(res.status.value == 200) {
@@ -146,5 +258,96 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
         return error
+    }
+
+    private fun fetchUserFriendlist () {
+
+        var userId : String
+        if (isVisitingOtherProfile) {
+            userId = user.id
+        } else userId = loggedUser.id
+
+        runBlocking {
+            val url = getString(R.string.server) + "/social/user-social-info"
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            //fetching donated pets
+            val res: HttpResponse = client.get(url) {
+                headers {
+                    append("userid", userId)
+                }
+            }
+            if(res.status.value == 200) {
+                userFriendlist = res.body()
+                client.close()
+            } else {
+                isFriendListEmpty = true
+                client.close()
+            }
+        }
+    }
+
+    private fun followUser() {
+        runBlocking {
+            val social =
+                Social(loggedUser.id, loggedUser.username, loggedUser.avatarurl,
+                        user.id, user.username, user.avatarurl)
+            val url = getString(R.string.server) + "/social/update-social-info"
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            //fetching donated pets
+            val res: HttpResponse = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(social)
+            }
+            if(res.status.value == 201) {
+                increaseFollowers()
+                client.close()
+            } else {
+                client.close()
+            }
+        }
+    }
+
+    private fun unfollowUser() {
+        runBlocking {
+            val url = getString(R.string.server) + "/social/delete-social-info"
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    gson()
+                }
+            }
+            //fetching donated pets
+            val res: HttpResponse = client.delete(url) {
+                headers {
+                    append("userid", loggedUser.id)
+                }
+            }
+            if(res.status.value == 200) {
+                decreaseFollowers()
+                client.close()
+            } else {
+                client.close()
+            }
+        }
+    }
+
+    private fun isFollowing() : Boolean {
+        var isFollowing = false
+        val userId = loggedUser.id
+
+        if(isFriendListEmpty) return false
+
+        for (follower in userFriendlist.followers) {
+            if(follower.follower_user_id == userId) isFollowing = true
+        }
+
+        return isFollowing
     }
 }

@@ -1,0 +1,45 @@
+#Server_urls
+API="http://localhost:4000"
+CLIENT_API="http://localhost:3000"
+
+#Google_credentials
+GOOGLE_CLIENT_ID="626832051163-kdqv5rlftuuvmibp47fctk1m0ge2321d.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="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"
+COOKIE_NAME = "auth_token"
+GOOGLE_CALLBACK_URL="http://localhost:4000/auth/google/callback"
+
+#Facebook_credentials
+FACEBOOK_APP_ID="1242862819542494"
+FACEBOOK_APP_SECRET="eb80e0ead4b3e16b0af8116fe2cf9bae"
+FACEBOOK_CALLBACK_URL="http://localhost:4000/auth/facebook/callback"
+
+#Emailer_credentials
+EMAILER_CLIENT_ID="1096424315968-rr4le4oaqfopkd9imn8cet9nqf2p442h.apps.googleusercontent.com"
+EMAILER_CLIENT_SECRET="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"
+EMAILER_REFRESH_TOKEN = "1//04-lmt5W6pbcLCgYIARAAGAQSNwF-L9Irz_fra8Vos0MQHT8zW-YHCmNF-KLFMiHETCtTbRMrxbnoD5zbNc5mDCf8g5LjOHFoWII"
+EMAILER_ACESS_TOKEN="ya29.a0ARrdaM8SXlD-7T5z4c_IxEnki3Q_1ZkGgvsmhLBtrx584cA7V6M2C7XJoxARoEKPWYSZuliXS9hsjPswFCK_qd4mwgObqAnECcTFbLvifQAuCpT4NJnzSsLmfRmYjVEruXcX90JglUTgyQ3iiz3WIQGBmpQO"
+email="petland.noreply@gmail.com"
+password="vevvpabplbfanqvv"
+
+#Database
+PGHOST="localhost"
+PGUSER="postgres"
+PGDATABASE="Petland-db"
+PGPASSWORD="123"
+PGPORT=5432
+PGDATABASE_URL="postgres://htdojchktskqpt:a45a1253402a09b1f0f4e789c62e843d1bfa8cbe72cc99351856b5e9f598fb4e@ec2-52-21-136-176.compute-1.amazonaws.com:5432/d7ekgmk7bbkmq6"
+
+#Firebase
+FIREBASE_PROJECT_ID="petland-90566"
+FIREBASE_PRIVATE_KEY_ID="92f8df6605ba524dc3b4fdfcfb01df66947162eb"
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCneBhpL6eqyx5J\nfE0Fn+/hWcRVrHQ6TWPnOC5zHkyHvQKWg3A4bpmK7snDa9UNq0Ft4918IG9OVS8U\nDvItBzSNjD2TnFPf/ryn5QXP/YMaq3rbf5MYC4DyYYlV90iCTZF/OxWCVLpTKGhR\n5I/DEOc5Q19QuL3E9aY6X4Ac6QkExElT4/EQ9BhHIsPa9jtnX2tQhV98tBqo96Fs\nJuZBhdOS/7FZtmQmWv8PjyfktuuN5yAmA2psCioukbUVxTwfh+NtKHut/ngmrjg2\nx4vCdO2mfIjWcuxzEVDYqwXu9RkZKaFu2eofTufCtQR5aBty5HLQCNoAF35Oyjlj\nE4vmnkm3AgMBAAECggEAAPRwrIYxXjTtmvJS0hm5BBTp8f8bY+Bgaxy+jw4jgOaf\n/CcLCGyrrXIdGQ3QAirxeDnuClt4/FOvWAhEcziboRmlRDvbnTxWQQgk7KxVB12Q\n7sLJyOpP4DyUIYxZD9J3Zj1PqxWRQRDK6iSeeTiVyOrMa/5m/pd+oiM8l22bYo6Q\nQU2S+ROYrIIWzG0J/mMO82L25K8tAFy09Qf5lYyF5PitcXOhv7SdpdZE3R4JVWSC\nJMf/ooI/ierjMw0WicCUKYVTssGFMjO4lSovWCg9b/LxKHD3Dzk8QWgRxT6+sev7\nuuClRfMHZp1dgQxJkDe8h09Ncq7rezjkjEK8tIEyWQKBgQDRpLp6spBiED4mQs+/\nlKnlaupbGyqLU9LsQ9Pq3Y+52zJsP2eWfwZw0hgEa276NG0WwCxAVE5dzDfMoyLC\nX0uhHQnU2d4V9H06L8RbLtzGfDlmzWiK6/6zPQXn7c7kAXGWJ3lJUIu1YTM5L5pP\nIJ9eamyfX44lQ7v2dkLaJs82FQKBgQDMgAHEBk5qjZtT73985sUMjqfXoh420G7v\nzJEiFRng+POUfHRYugjzyCQ3wxyzZXXJfB+AEWthZQcoqT713ShzHYs0XBV0bWU1\nJGcYIpvbN7RUeGZMY3lH/LT7TjZ2Z94xDgc7sKOrqOr9eXJ9MEQcliPRIYpge2J1\nSgWy9CwfmwKBgQCPKI8TFHbWEENwezVEnS87c7wfhLiTtiUVo+fFvZDVGOMg2ldR\nhOKQDlfKRNbe0wgffhF5yFhPYxJDkq88zjhmB99b0379vRv6rP3ISoMGo3PLSL94\nBlnCagxraZBbUMURBVmkf/U3Ye3JwkD8gclyfvg4CNeXiN6FGhLix5e+VQKBgQC6\nZHo3h1/18rf+2y6iU1yLQ4NsIZHUeEqFOzmVjRIXYhHx5zXMoVQDjwqj4KzKPtIL\nIZ08h6QOE51gzFJcmoWB1w3IXZ4YjpVOyK1G7FSOjMlKrKrhOVGT8Zur6u/tIGL+\n50BkgW3MypvVCNr3jASo4Zgnx6BurEdjjGKBZ9jHvQKBgH1y9jUhINNAiRJQpVNP\nsDwWWwGRn+4SOJlQvduI2Z5Mxi/7uAij4CYtpiA6M7nDDeEsnjzsiOOLXjP0Fg+H\nhSxaVAkmHPvPTnFPXgDd0AHRRZ5C9yZzhYHNoPT0jyQAgPHk1U4GZ/TLLjv46R7Z\ns2R4vJkMEc+uwzsrJ61iBAem\n-----END PRIVATE KEY-----\n"
+FIREBASE_CLIENT_EMAIL="firebase-adminsdk-v7t0v@petland-90566.iam.gserviceaccount.com"
+FIREBASE_CLIENT_ID="115819517065206329901"
+FIREBASE_AUTH_URI="https://accounts.google.com/o/oauth2/auth"
+FIREBASE_TOKEN_URI="https://oauth2.googleapis.com/token"
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL="https://www.googleapis.com/oauth2/v1/certs"
+FIREBASE_CLIENT_X509_CERT_URL="https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-v7t0v%40petland-90566.iam.gserviceaccount.com"
+FIREBASE_STORAGE_BUCKET="petland-90566.appspot.com"
+
+#Jest Bypass
+isAuthenticated = True
