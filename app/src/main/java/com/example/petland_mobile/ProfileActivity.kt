@@ -35,7 +35,6 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
-
         //getting user info
         val profileInfo = intent.extras?.get("profileInfo") as? ProfileInfo
 
@@ -133,6 +132,29 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 followUser()
                 isFollowingText.text = getString(R.string.following_user)
+            }
+        }
+
+        val userFollowersBtn : TextView = findViewById(R.id.user_followers)
+        val userFollowingBtn : TextView = findViewById(R.id.user_following)
+
+        userFollowersBtn.setOnClickListener {
+            if(userFriendlist.followersQtd > 0 ){
+                val intent = Intent(this,  FriendList::class.java)
+                intent.putExtra("user", loggedUser)
+                intent.putExtra("friendlist", userFriendlist)
+                intent.putExtra("viewType", "followers")
+                startActivity(intent)
+            }
+        }
+
+        userFollowingBtn.setOnClickListener {
+            if(userFriendlist.followingQtd > 0 ){
+                val intent = Intent(this,  FriendList::class.java)
+                intent.putExtra("user", loggedUser)
+                intent.putExtra("friendlist", userFriendlist)
+                intent.putExtra("viewType", "following")
+                startActivity(intent)
             }
         }
     }
