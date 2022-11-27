@@ -1,12 +1,12 @@
 package com.example.petland_mobile.models
 
 class Social {
-    var followerUserId : String
-    var followerUsername : String
-    var followerUserAvatarurl : String
-    var followingUserId : String
-    var followingUsername : String
-    var followingUserAvatarurl : String
+    var follower_user_id : String
+    var follower_username : String
+    var follower_user_avatarurl : String
+    var following_user_id : String
+    var following_username : String
+    var following_user_avatarurl : String
 
     constructor(
         followerUserId: String,
@@ -16,11 +16,11 @@ class Social {
         followingUsername: String,
         followingUserAvatarurl: String
     ) {
-        this.followerUserId = followerUserId
-        this.followerUsername = followerUsername
-        this.followerUserAvatarurl = followerUserAvatarurl
-        this.followingUserId = followingUserId
-        this.followingUsername = followingUsername
-        this.followingUserAvatarurl = followingUserAvatarurl
+        this.follower_user_id = followerUserId
+        this.follower_username = followerUsername
+        this.follower_user_avatarurl = followerUserAvatarurl
+        this.following_user_id = followingUserId
+        this.following_username = followingUsername
+        this.following_user_avatarurl = followingUserAvatarurl
     }
 }

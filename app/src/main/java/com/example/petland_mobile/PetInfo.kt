@@ -5,12 +5,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.petland_mobile.databinding.ActivityPetInfoBinding
-import com.example.petland_mobile.models.Pet
-import com.example.petland_mobile.models.User
+import com.example.petland_mobile.models.*
 import com.example.petland_mobile.models.PetInfo
-import com.example.petland_mobile.models.petList
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.gson.Gson
 import io.ktor.client.*
@@ -26,12 +26,13 @@ import kotlinx.coroutines.runBlocking
 
 class PetInfo : AppCompatActivity() {
 
-    private lateinit var  binding: ActivityPetInfoBinding
     private lateinit var user : User
     private lateinit var pet : Pet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fresco.initialize(this)
+        setContentView(R.layout.activity_pet_info)
 
         //getting user info
         val petInfo = intent.extras?.get("petInfo") as? PetInfo
@@ -42,12 +43,9 @@ class PetInfo : AppCompatActivity() {
             pet = petInfo.pet!!
         }
 
-        binding = ActivityPetInfoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         //loadUserImg(user.avatarurl)
 
-        val pet  = intent.extras?.get("pet")
+        //val pet  = intent.extras?.get("pet")
 
         updateUI(petInfo as PetInfo)
 
@@ -63,6 +61,21 @@ class PetInfo : AppCompatActivity() {
        // requestButton.setOnClickListener {
           //  requestPet()
         //}
+
+        val donatorUserProfile : LinearLayout = findViewById(R.id.donator_userprofile_container)
+        donatorUserProfile.setOnClickListener {
+            if(user.id != pet.donatorInfo!!.id) {
+                val profileInfo = ProfileInfo(user, pet.donatorInfo!!)
+                val intent = Intent(this,  ProfileActivity::class.java)
+                intent.putExtra("profileInfo", profileInfo)
+                startActivity(intent)
+            } else {
+                val profileInfo = ProfileInfo(user)
+                val intent = Intent(this,  ProfileActivity::class.java)
+                intent.putExtra("profileInfo", profileInfo)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun requestPet(){

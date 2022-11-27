@@ -3,14 +3,14 @@ package com.example.petland_mobile.models
 class UserFriendlist {
     var followingQtd: Int
     var followersQtd: Int
-    var followers: MutableList<User>
-    var following: MutableList<User>
+    var followers: MutableList<Social>
+    var following: MutableList<Social>
 
     constructor(
         followingQtd: Int,
         followersQtd: Int,
-        followers: MutableList<User>,
-        following: MutableList<User>
+        followers: MutableList<Social>,
+        following: MutableList<Social>
     ) {
         this.followingQtd = followingQtd
         this.followersQtd = followersQtd
