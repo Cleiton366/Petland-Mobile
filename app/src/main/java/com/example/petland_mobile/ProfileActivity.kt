@@ -137,6 +137,21 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun increaseFollowers () {
+        userFriendlist.followersQtd += 1
+        runOnUiThread {
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+        }
+    }
+    private fun decreaseFollowers () {
+        userFriendlist.followersQtd -= 1
+        runOnUiThread {
+            val userFollowers : TextView = findViewById(R.id.user_followers)
+            userFollowers.text = "Followers: ${userFriendlist.followersQtd}"
+        }
+    }
+
     private fun loadUserInfo() {
 
         val imageView = findViewById<SimpleDraweeView>(R.id.profile_image)
@@ -292,7 +307,7 @@ class ProfileActivity : AppCompatActivity() {
                 setBody(social)
             }
             if(res.status.value == 201) {
-                userFriendlist = res.body()
+                increaseFollowers()
                 client.close()
             } else {
                 client.close()
@@ -315,7 +330,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
             if(res.status.value == 200) {
-                userFriendlist = res.body()
+                decreaseFollowers()
                 client.close()
             } else {
                 client.close()
@@ -325,12 +340,12 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun isFollowing() : Boolean {
         var isFollowing = false
-        val userId = user.id
+        val userId = loggedUser.id
 
         if(isFriendListEmpty) return false
 
-        for (user in userFriendlist.following) {
-            if(user.id == userId) isFollowing = true
+        for (follower in userFriendlist.followers) {
+            if(follower.follower_user_id == userId) isFollowing = true
         }
 
         return isFollowing
