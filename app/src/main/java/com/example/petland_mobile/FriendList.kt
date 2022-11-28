@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.example.petland_mobile.Interface.UserClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petland_mobile.adapters.AdapterCard
 import com.example.petland_mobile.adapters.UserCardAdapter
 import com.example.petland_mobile.models.ProfileInfo
 import com.example.petland_mobile.models.User
