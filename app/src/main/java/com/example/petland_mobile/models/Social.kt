@@ -1,6 +1,8 @@
 package com.example.petland_mobile.models
 
-class Social {
+import java.io.Serializable
+
+class Social : Serializable{
     var follower_user_id : String
     var follower_username : String
     var follower_user_avatarurl : String

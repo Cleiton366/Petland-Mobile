@@ -1,6 +1,8 @@
 package com.example.petland_mobile.models
 
-class UserFriendlist {
+import java.io.Serializable
+
+class UserFriendlist : Serializable {
     var followingQtd: Int
     var followersQtd: Int
     var followers: MutableList<Social>
