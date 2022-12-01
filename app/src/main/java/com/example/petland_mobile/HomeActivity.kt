@@ -1,12 +1,9 @@
 package com.example.petland_mobile
 
 import android.content.Intent
-import android.net.Uri
 import com.example.petland_mobile.models.User
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import com.example.petland_mobile.models.ProfileInfo
 import com.facebook.drawee.backends.pipeline.Fresco

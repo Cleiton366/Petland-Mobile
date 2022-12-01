@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="360dp"
         android:layout_height="120dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/secondaryColor"
         app:cardElevation="5dp"
         app:cardCornerRadius="10dp"
         android:layout_marginBottom="10dp">
@@ -26,49 +26,35 @@
                 app:roundAsCircle="true" />
 
             <TextView
-                android:id="@+id/request_list_user_name"
-                android:layout_width="125dp"
-                android:layout_height="64dp"
+                android:id="@+id/request_list_tittle"
+                android:layout_width="133dp"
+                android:layout_height="92dp"
                 android:layout_margin="20dp"
+                android:textColor="@color/black"
                 android:textSize="10pt"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="205dp"
+                android:layout_width="95dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
+                android:layout_marginRight="3dp"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/secondaryColor"
+                android:backgroundTint="@color/secondaryColor"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/primaryColor">
-
                     <Button
-                        android:id="@+id/acceptButton"
-                        android:layout_width="match_parent"
+                        android:id="@+id/acceptBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/botton_accept"
                         android:text="@string/bottoAccept" />
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/primaryColor">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/botton_reject"
-                            android:text="@string/bottonReject" />
-
-
-                </androidx.cardview.widget.CardView>
-
+                    <Button
+                        android:id="@+id/rejectBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/botton_reject"
+                        android:text="@string/bottonReject" />
 
             </LinearLayout>
 

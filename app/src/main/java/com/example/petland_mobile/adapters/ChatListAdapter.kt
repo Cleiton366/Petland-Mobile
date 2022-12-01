@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.databinding.CardChatListCellBinding
-import com.example.petland_mobile.databinding.CardRequestCellBinding
 import com.example.petland_mobile.holders.ChatListViewHolder
-import com.example.petland_mobile.holders.RequestMenViewHolder
 import com.example.petland_mobile.models.User
 
 class ChatListAdapter (private val chatlist : List<User>)
