@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.petland_mobile.Interface.PetClickListener
 import com.example.petland_mobile.adapters.AdapterCard
 import com.example.petland_mobile.models.*
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -35,6 +36,7 @@ class AdoptResearch : AppCompatActivity(), PetClickListener {
         }
 
         super.onCreate(savedInstanceState)
+        Fresco.initialize(this)
         setContentView(R.layout.activity_adopt_research)
 
         loadUserImg(user.avatarurl)
