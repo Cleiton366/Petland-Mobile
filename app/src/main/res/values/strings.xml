@@ -4,7 +4,7 @@
     <string name="home_text">PetLand is a platform where you can adopt pets or help them get a new family.</string>
     <string name="signin_google">Sign in with Google</string>
     <string name="client_id">626832051163-k77a5fp4vmdgkuf6p4t6adoajqc03kem.apps.googleusercontent.com</string>
-    <string name="server">http://10.0.0.85:4000</string>
+    <string name="server">http://10.0.0.86:4000</string>
     <string name="tittle_choose_option">What do you want to do?</string>
     <string name="Adopt_Cat_Card_Tittle">Adopt a cat</string>
     <string name="Adopt_Dog_Card_Tittle">Adopt a dog</string>
@@ -12,6 +12,7 @@
     <string name="Friendlist_Card_tittle">My Friendlist</string>
     <string name="file_name">Choose a photo of the pet</string>
     <string name="pet_name">Name:</string>
+    <string name="pet_address">Address:</string>
     <string name="pet_city">City:</string>
     <string name="pet_state">State:</string>
     <string name="pet_age">Age:</string>
@@ -25,6 +26,7 @@
     <string name="bottoAccept"> Accept</string>
     <string name="bottonReject"> Reject </string>
     <string name="request_adopt"> Request Adopt</string>
+    <string name="view_location">View pet location on map</string>
 
     <string-array name="pet_medical_condition_options">
         <item>Healthy</item>
@@ -47,4 +49,5 @@
 
     <string name="following_user">Unfollow</string>
     <string name="not_following_user">Follow</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

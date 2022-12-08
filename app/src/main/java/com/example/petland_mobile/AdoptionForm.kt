@@ -160,10 +160,11 @@ class AdoptionForm : AppCompatActivity() {
         val petCity = findViewById<Spinner>(R.id.spinner_city).selectedItem.toString()
         val petMedicalCondition = findViewById<Spinner>(R.id.spinner_pet_medical_condition).selectedItem.toString()
         val petAge : Int = findViewById<Spinner>(R.id.spinner_pet_age).selectedItem.toString().toInt()
+        val address : String = findViewById<TextView>(R.id.address).text.toString()
         val petType = petType
         var success = false
 
-        val petAddress = PetAddress(petCity, petState)
+        val petAddress = PetAddress(petCity, petState, address)
         val petForm = PetForm (user.id, petName, petAge, petMedicalCondition, petType, petAddress)
 
         val file = File(getRealPathFromURI(this,imageUri!!));

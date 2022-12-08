@@ -76,6 +76,15 @@ class PetInfo : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        val mapBtn : Button = findViewById(R.id.viewLocationBtn)
+        mapBtn.setOnClickListener {
+            val petAddress = PetAddress(pet.city, pet.sstate, pet.address)
+            val intent = Intent(this,  MapsActivity::class.java)
+            intent.putExtra("user", user)
+            intent.putExtra("address", petAddress.toString())
+            startActivity(intent)
+        }
     }
 
     private fun requestPet(){
